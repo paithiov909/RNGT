@@ -1,0 +1,10 @@
+PKG_CPPFLAGS += -I./NGT/lib $(SHLIB_OPENMP_CXXFLAGS) -pthread
+PKG_LIBS += $(SHLIB_OPENMP_CXXFLAGS) -pthread
+
+SOURCES = rcpp_hello_world.cpp RcppExports.cpp $(wildcard NGT/lib/NGT/*.cpp)
+OBJECTS=$(SOURCES:.cpp=.o)
+
+all: $(SHLIB)
+
+clean:
+	@rm -f $(OBJECTS)

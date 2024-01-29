@@ -1,0 +1,3 @@
+#!/bin/sh
+rm -f src/NGT/lib/NGT/defines.h
+rm -f src/NGT/lib/NGT/version_defs.h

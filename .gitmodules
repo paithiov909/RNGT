@@ -1,0 +1,3 @@
+[submodule "src/NGT"]
+	path = src/NGT
+	url = https://github.com/yahoojapan/NGT.git
