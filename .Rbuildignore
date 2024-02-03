@@ -4,6 +4,7 @@
 ^README\.Rmd$
 ^cran-comments\.md$
 ^renovate\.json$
+^\.github$
 ^\.vscode$
 ^build$
 ^src/NGT/\.git$

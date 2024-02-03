@@ -7,6 +7,7 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/paithiov909/RNGT/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paithiov909/RNGT/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 R wrappers for [NGT](https://github.com/yahoojapan/NGT), which provides
@@ -53,11 +54,11 @@ results
 #> # A tibble: 5 × 2
 #>      id distance
 #>   <int>    <dbl>
-#> 1     1      0  
-#> 2    89     63.3
-#> 3    97     65.3
-#> 4    92     70.0
-#> 5    10     76.1
+#> 1     1       0 
+#> 2    68     102.
+#> 3    45     103.
+#> 4    61     104.
+#> 5    56     106.
 
 index$close()
 ```
