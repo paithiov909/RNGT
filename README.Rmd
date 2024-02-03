@@ -4,13 +4,19 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+if (!requireNamespace("RNGT", quietly = TRUE)) {
+  withr::with_path(
+    Sys.getenv("LINUXBREW_PATH"),
+    { pkgload::load_all(export_all = FALSE) }
+  )
+}
 ```
 
 # RNGT
@@ -19,13 +25,44 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of RNGT is to ...
+R wrappers for [NGT](https://github.com/yahoojapan/NGT), which provides high-speed approximate nearest neighbor searches against a large volume of data in high dimensional vector data space.
 
 ## Installation
 
-You can install the development version of RNGT from [GitHub](https://github.com/) with:
+You can install the development version of RNGT from [GitHub](https://github.com/paithiov909/RNGT) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("paithiov909/RNGT")
+remotes::install_github("paithiov909/RNGT")
+```
+
+## Usage
+
+```{r examples}
+require(RNGT)
+
+vectors <- runif(100 * 10, max = 100) |>
+  matrix(nrow = 100, ncol = 10)
+
+query <- vectors[1, ]
+
+dir <- tempdir()
+index <- RNGT::NgtIndex$new(dir)
+index$create(dimension = ncol(vectors))
+
+# since `create` just creates an empty index,
+# you must `open` the index to insert new data.
+index$open()
+index$batch_insert(vectors)
+index$save()
+
+results <- index$search(query, k = 5L)
+results
+
+index$close()
+```
+
+```{r cleanup, include = FALSE}
+rm(index)
+gc()
+gc()
 ```

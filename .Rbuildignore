@@ -4,3 +4,13 @@
 ^README\.Rmd$
 ^cran-comments\.md$
 ^renovate\.json$
+^\.vscode$
+^build$
+^src/NGT/\.git$
+^src/NGT/assets$
+^src/NGT/bin$
+^src/NGT/data$
+^src/NGT/python$
+^src/NGT/samples$
+^src/NGT/tests$
+^src/NGT/utils$

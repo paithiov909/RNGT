@@ -1,7 +1,8 @@
-PKG_CPPFLAGS += -I./NGT/lib $(SHLIB_OPENMP_CXXFLAGS) -pthread
+PKG_CPPFLAGS += -I./NGT/lib -DSTRICT_R_HEADERS -pthread
+PKG_CXXFLAGS += $(SHLIB_OPENMP_CXXFLAGS)
 PKG_LIBS += $(SHLIB_OPENMP_CXXFLAGS) -pthread
 
-SOURCES = rcpp_hello_world.cpp RcppExports.cpp $(wildcard NGT/lib/NGT/*.cpp)
+SOURCES = RNGT.cpp RcppExports.cpp $(wildcard NGT/lib/NGT/*.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 
 all: $(SHLIB)

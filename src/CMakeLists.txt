@@ -1,16 +1,16 @@
 cmake_minimum_required(VERSION 3.12)
-project(configure-defines.h CXX)
+project(configure-defines.h)
 
-set(NGT_AVX_DISABLED TRUE)
-set(NGT_QBG_DISABLED TRUE) # if QBG is enabled, requires BLAS and LAPACK
+set(NGT_SHARED_MEMORY_ALLOCATOR ON)
+set(NGT_AVX_DISABLED TRUE) # TODO: check if AVX is available
 
 file(STRINGS "NGT/VERSION" ngt_VERSION)
 message(STATUS "NGT_VERSION: ${ngt_VERSION}")
-file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/NGT/lib/NGT/version_defs.h" "#define NGT_VERSION \"${ngt_VERSION}\"")
+file(WRITE "${CMAKE_CURRENT_SOURCE_DIR}/NGT/lib/NGT/version_defs.h" "#define NGT_VERSION \"${ngt_VERSION}\" \n")
 
 if(${UNIX})
   if(${NGT_SHARED_MEMORY_ALLOCATOR})
-    set(NGT_QBG_DISABLED TRUE)
+    set(NGT_QBG_DISABLED TRUE) # if QBG is enabled, requires BLAS and LAPACK
   endif(${NGT_SHARED_MEMORY_ALLOCATOR})
 
   if(${NGT_AVX_DISABLED})
