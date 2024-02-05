@@ -41,23 +41,40 @@ remotes::install_github("paithiov909/RNGT")
 ```{r examples}
 require(RNGT)
 
-vectors <- runif(100 * 10, max = 100) |>
-  matrix(nrow = 100, ncol = 10)
+data("gen7singles2018", package = "RNGT")
 
-query <- vectors[1, ]
+vectors <-
+  dplyr::select(
+    gen7singles2018,
+    !starts_with("name")
+  ) |>
+  as.matrix()
 
-dir <- tempdir()
-index <- RNGT::NgtIndex$new(dir)
-index$create(dimension = ncol(vectors))
+query <-
+  vectors[gen7singles2018$name_en == "blissey", ]
+
+index <- RNGT::NgtIndex$
+  new(tempdir())$
+  create(
+    dimension = ncol(vectors),
+    distance_type = "cosine"
+  )
 
 # since `create` just creates an empty index,
 # you must `open` the index to insert new data.
-index$open()
-index$batch_insert(vectors)
+index$
+  open()$
+  batch_insert(vectors)
 index$save()
 
-results <- index$search(query, k = 5L)
-results
+results <- index$search(query, k = 10L)
+gen7singles2018 |>
+  dplyr::select(
+    name_en, name_ja
+  ) |>
+  dplyr::mutate(id = dplyr::row_number()) |>
+  dplyr::inner_join(results, by = "id") |>
+  dplyr::arrange(distance)
 
 index$close()
 ```

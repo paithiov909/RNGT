@@ -320,7 +320,7 @@ Inserts data into the index and build a search index.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-integers; the IDs of the inserted objects.
+the IDs of the inserted objects are returned invisibly.
 }
 }
 \if{html}{\out{<hr>}}
@@ -342,7 +342,7 @@ you need to call \code{build_index} after call this method.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-integers; the IDs of the inserted objects.
+the ID of the inserted object is returned invisibly.
 }
 }
 \if{html}{\out{<hr>}}

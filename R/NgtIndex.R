@@ -238,7 +238,7 @@ NgtIndex <- R6::R6Class("NgtIndex", # nolint
     #' Inserts data into the index and build a search index.
     #' @param data data to be inserted.
     #' @param num_threads number of threads to be used for building the index.
-    #' @return integers; the IDs of the inserted objects.
+    #' @return the IDs of the inserted objects are returned invisibly.
     batch_insert = function(data, num_threads = 1L) {
       private$check_index_opened()
 
@@ -246,7 +246,9 @@ NgtIndex <- R6::R6Class("NgtIndex", # nolint
         rlang::abort("num_threads must be a positive integer.")
       }
       data <- as.matrix(data)
-      private$index$batch_insert(data, num_threads)
+      invisible(
+        private$index$batch_insert(data, num_threads)
+      )
     },
 
     #' @description
@@ -254,12 +256,14 @@ NgtIndex <- R6::R6Class("NgtIndex", # nolint
     #' To search with the index,
     #' you need to call `build_index` after call this method.
     #' @param vec vector to be inserted.
-    #' @return integers; the IDs of the inserted objects.
+    #' @return the ID of the inserted object is returned invisibly.
     insert = function(vec) {
       private$check_index_opened()
 
       vec <- as.double(vec)
-      private$index$insert(vec)
+      invisible(
+        private$index$insert(vec)
+      )
     },
 
     #' @description
@@ -301,7 +305,8 @@ NgtIndex <- R6::R6Class("NgtIndex", # nolint
         rlang::abort(
           paste(
             "There are no index opened.",
-            "please open the index at first.")
+            "please open the index at first."
+          )
         )
       }
       invisible()

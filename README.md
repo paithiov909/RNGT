@@ -28,37 +28,53 @@ remotes::install_github("paithiov909/RNGT")
 ``` r
 require(RNGT)
 
-vectors <- runif(100 * 10, max = 100) |>
-  matrix(nrow = 100, ncol = 10)
+data("gen7singles2018", package = "RNGT")
 
-query <- vectors[1, ]
+vectors <-
+  dplyr::select(
+    gen7singles2018,
+    !starts_with("name")
+  ) |>
+  as.matrix()
 
-dir <- tempdir()
-index <- RNGT::NgtIndex$new(dir)
-index$create(dimension = ncol(vectors))
+query <-
+  vectors[gen7singles2018$name_en == "blissey", ]
+
+index <- RNGT::NgtIndex$
+  new(tempdir())$
+  create(
+    dimension = ncol(vectors),
+    distance_type = "cosine"
+  )
 
 # since `create` just creates an empty index,
 # you must `open` the index to insert new data.
-index$open()
-index$batch_insert(vectors)
-#>   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
-#>  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
-#>  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
-#>  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
-#>  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
-#>  [91]  91  92  93  94  95  96  97  98  99 100
+index$
+  open()$
+  batch_insert(vectors)
 index$save()
 
-results <- index$search(query, k = 5L)
-results
-#> # A tibble: 5 × 2
-#>      id distance
-#>   <int>    <dbl>
-#> 1     1       0 
-#> 2    68     102.
-#> 3    45     103.
-#> 4    61     104.
-#> 5    56     106.
+results <- index$search(query, k = 10L)
+gen7singles2018 |>
+  dplyr::select(
+    name_en, name_ja
+  ) |>
+  dplyr::mutate(id = dplyr::row_number()) |>
+  dplyr::inner_join(results, by = "id") |>
+  dplyr::arrange(distance)
+#> # A tibble: 10 × 4
+#>    name_en    name_ja       id distance
+#>    <chr>      <chr>      <int>    <dbl>
+#>  1 blissey    ハピナス      62    0    
+#>  2 chansey    ラッキー      90    0.695
+#>  3 espeon     エーフィ      83    0.731
+#>  4 umbreon    ブラッキー    48    0.747
+#>  5 cloyster   パルシェン   122    0.760
+#>  6 pinsir     カイロス      34    0.774
+#>  7 whimsicott エルフーン   143    0.780
+#>  8 reuniclus  ランクルス    49    0.801
+#>  9 banette    ジュペッタ    29    0.803
+#> 10 braviary   ウォーグル    45    0.805
 
 index$close()
 ```

@@ -8,6 +8,13 @@
 \description{
 Wrappers for 'NGT' (Neighborhood Graph and Tree for indexing high-dimensional data) which performs high-speed approximate nearest neighbor searches against a large volume of data in high dimensional vector data space.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item Report bugs at \url{https://github.com/paithiov909/RNGT/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Akiru Kato \email{paithiov909@gmail.com}
 

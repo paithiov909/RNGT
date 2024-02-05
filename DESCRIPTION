@@ -1,6 +1,6 @@
 Package: RNGT
 Title: Wrappers for 'NGT'
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R:
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre"))
 Description: Wrappers for 'NGT' (Neighborhood Graph and Tree for indexing
@@ -9,6 +9,8 @@ Description: Wrappers for 'NGT' (Neighborhood Graph and Tree for indexing
     vector data space.
 License: Apache License (>= 2)
 BugReports: https://github.com/paithiov909/RNGT/issues
+Depends: 
+    R (>= 2.10)
 Imports:
     methods,
     R6 (>= 2.4.0),
@@ -21,6 +23,7 @@ LinkingTo:
     Rcpp
 Config/testthat/edition: 3
 Encoding: UTF-8
+LazyData: true
 OS_type: unix
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
